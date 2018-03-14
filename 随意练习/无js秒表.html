@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>秒表</title>
+    <style>
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .panel{
+            width:500px;
+            height:500px;
+            background-color: #cccccc;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        .pin{
+            height:2px;
+            width:500px;
+            margin: 250px;
+            box-sizing: border-box;
+            border:solid 2px black;
+            transform-origin: left;
+            animation: clock 5s linear;
+            animation-iteration-count: infinite;
+        }
+        @keyframes clock {
+            0%{
+                transform: rotate(0deg);
+            }
+            50%{
+                transform: rotate(180deg);
+            }
+            100%{
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="panel">
+    <div class="pin"></div>
+</div>
+</body>
+</html>

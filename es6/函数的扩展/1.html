@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>函数的扩展</title>
+</head>
+<body>
+<script>
+    {
+        /*函数默认值*/
+        let Person = function (name, age, job='default') {
+            this.name = name
+            this.age = age
+            this.job = job
+        }
+        let me = new Person('lcz', 24, 'st')
+        console.log(me)
+    }
+
+    {
+        /*默认值+解构赋值*/
+        let print = function ({x, y = 5}) {
+            console.log(x, y)
+        }
+        print({})
+        print({x: 5, y: 3})
+        print({a: 5, b: 3})
+        //实用
+        let fetch=function (url,{body='',method='GET',headers={}}) {
+            console.log(arguments[0])
+            console.log(arguments[1])
+        }
+        fetch('www.a.com',{
+            body:'body',
+            method:'post',
+            headers:{
+                content:'content'
+            }
+        })
+        //区分
+        let m1=function ({x=0,y=0}={}) {
+            console.log(x,y)
+        }
+        let m2=function ({x,y}={x:0,y:0}) {
+            console.log(x,y)
+        }
+        m1()
+        m2()
+        m1({})
+        m2({})
+    }
+    {
+        /*length属性
+        * 返回没有默认值参数的个数*/
+        let foo=function (a,c,b=1) {
+            console.log(a,b,c)
+        }
+        console.log(foo.length)
+
+    }
+</script>
+</body>
+</html>

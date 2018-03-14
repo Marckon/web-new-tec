@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>硬币旋转</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .coin{
+            display: flex;
+            width:200px;
+            height:200px;
+            border-radius: 50%;
+            background-color: silver;
+            box-shadow: 0 0 5px #000;
+            transform-origin: center;
+            align-items: center;
+            justify-content: center;
+            animation:rotate 5s linear;
+            animation-iteration-count: infinite;
+        }
+        .text{
+            font-size: 3rem;
+        }
+        @keyframes rotate {
+            from{
+                transform: rotate(0deg);
+            }
+            to{
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="coin">
+    <div class="text">1元</div>
+</div>
+</body>
+</html>

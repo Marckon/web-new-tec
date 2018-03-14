@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>let</title>
+</head>
+<body>
+<script>
+    {
+        /*变量提升
+        * 函数提升优先级最大
+        * 变量提升后，只声明不赋值*/
+        function f(a) {
+            console.log(a)//function
+            var a=2
+            console.log(a)//2
+            function a(){}
+            console.log(a)//2
+        }
+        f(1)
+    }
+    {
+        /*暂时性死区
+        * let，const声明前使用会报错*/
+        console.log(temp)
+        var temp='123'
+        console.log(temp2)//报错
+        let temp2='456'
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>log封装</title>
+</head>
+<body>
+<h1>请输入一系列参数，以英文逗号分隔</h1>
+<input type="text" id="input">
+<button>转义</button>
+<script>
+    document.getElementsByTagName('button')[0].onclick=function (ev) {
+        const paramArr=document.getElementById('input').value.split(',')
+        console.log(paramArr)
+        paramArr.map(function (value) {
+            console.log('(app) '+value)
+        })
+    }
+
+</script>
+</body>
+</html>

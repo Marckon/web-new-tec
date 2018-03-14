@@ -1,0 +1,108 @@
+// 1.变量 //5. 操作（算术运算）
+@nice-blue: #5B83AD;
+@light-blue: #5B83ad+#111;
+@font-color: #ccc;
+@rgb-test: rgb(29, 53, 92);
+@theme-color: #000;
+@table-width: 500px;
+@width: 0.5;
+@scope-test-content:'global content';
+
+#header {
+  color: @nice-blue
+}
+
+//2. 混入
+.two-line-border {
+  border-top: solid 2px @theme-color;
+  border-bottom: solid 1px @light-blue;
+}
+
+.mixin {
+  .two-line-border;
+  width: @table-width;
+}
+
+//3. 嵌套规则
+.nested {
+  .two-line-border;
+  section {
+    color: @rgb-test
+  }
+  p:before {
+    content: '# '
+  }
+  &:before {
+    content: '^//& denotes current parent element'
+  }
+}
+
+//4. 嵌套指令和冒泡
+.bubble {
+  @media screen {
+    color: green;
+    font-size: 1rem;
+    transition: all .5s ease;
+    @media (min-width: 768px) {
+      color: blue;
+      font-size: 2rem;
+    }
+  }
+}
+
+//6. 转义（escape）
+.escape {
+  .two-line-border;
+  color: ~'green';
+  font-size: ~'2rem';
+}
+
+//7. 方法（函数）
+.function {
+  margin-top: 15px;
+  .two-line-border;
+  width: @table-width;
+  font-size: 2rem;
+  .quota {
+    width: percentage(@width); // 转换为百分比
+    color: saturate(@rgb-test, 50%); // 颜色饱和度增加50%
+    background-color: pink;
+  }
+}
+
+//8. 命名空间和访问器
+.namespace {
+  div {
+    .function> .quota;// 引用.function的.quota样式，不能是tag名称如div，p，section等
+  }
+}
+
+//9. 范围
+#scope{
+  @scope-test-content:'change to scoped';
+  &:before{
+    content:@scope-test-content;
+    font-size: 2rem;
+    @scope-test-content:'scoped content';
+  }
+  div:before{
+    content: @scope-test-content;
+  }
+}
+
+//10. 变量的详细讲解
+@my-selector:interpolation;
+@images:'https://avatars3.githubusercontent.com/u/24504081?s=40&v=4';
+@property:color;
+
+.@{my-selector}:before{
+  content:'variable interpolation变量插值';
+}
+.@{my-selector}{
+  background: url('@{images}') no-repeat;
+  width:500px;
+  height:200px;
+  @{property}:#ccc;
+}
+
+//11. 扩展
