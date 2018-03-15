@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组扩展</title>
+</head>
+<body>
+<ul>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<script>
+    {
+        /*扩展运算符*/
+        let a=[1,2,3]
+        let b=[4,5,6]
+        a.push(...b)
+        console.log(a)
+        /*应用1： 复制数组深拷贝*/
+        let a1=[7,8,9]
+        let a2=[...a1]
+        a2[2]=10
+        console.log(a1)
+        console.log(a2)
+        /*应用2：合并数组*/
+        console.log([...a,...b,...a1,...a2])
+        /*应用3：结合解构赋值
+        * 必须放末尾*/
+        let [first,second,...third]=[1,2,3,4,5,6]
+        console.log(first)
+        console.log(third)
+        /*应用4：转换字符串*/
+        console.log([...'marckon'])
+    }
+    {
+        /*Array.from( ) 类数组和可遍历对象转换为真正数组*/
+        let lis=document.querySelectorAll('li')
+
+     /*   lis.map(function (v) {
+            v.innerHTML='hello'
+        })*///报错，因为lis不是数组
+
+        /*方法1：使用扩展符*/
+       /*lis=[...lis]
+        lis.map(function (v) {
+            v.innerHTML='hello'
+        })*/
+
+       /*方法2：使用Array.from*/
+       let lisTrans=Array.from(lis)
+        lisTrans.map(function (v) {
+            v.innerHTML='hello'
+        })
+    }
+    {
+        /*Array.of*/
+        console.log(Array.of(1,2,3))
+    }
+    {
+        /*copywithin: 数组内部替换*/
+        console.log([1,2,3,'a','b'].copyWithin(0,3,4))
+    }
+    {
+        /*find: 返回第一个查找到的成员*/
+        let a=[1,2,3,4,-5,6,7,8]
+        console.log(a.find(n=>n<0))
+        console.log(a.findIndex(n=>n<0))
+        console.log(a.find(function (value,index, originArr) {
+            return index>5
+        }))
+        /*与filter区别*/
+        console.log(a.filter(v=>v>5))//返回一个数组,第一个元素即为find
+    }
+    {
+        /*fill*/
+        console.log(new Array(3).fill(7))
+        console.log([1,2,3].fill(7))
+        console.log([1,2,3].fill(7,1,2))
+    }
+    {
+        /*entries, keys values*/
+       let person=[1,2,3]
+        for(let index of person.keys()){
+           console.log(index)
+        }
+    }
+    {
+        /*include判断是否包含给定值*/
+        console.log([1,2,3,4,5].includes(5))
+        console.log([1,2,3,4,5].includes(4,-1))
+    }
+</script>
+</body>
+</html>
