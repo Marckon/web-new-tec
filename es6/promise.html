@@ -60,6 +60,12 @@
         }).then(json2 => console.log(json2.data.name))
             .catch(err => console.log(err))
             .finally(()=>console.log('promise end'))
+        getJson("http://music.163.com/api/playlist/detail?id=165161308").then(json=>{
+            console.log(json)
+        })
+    }
+    {
+        /*promise all*/
     }
 </script>
 </body>

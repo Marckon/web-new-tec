@@ -205,6 +205,25 @@
         console.log(proto)
         obj.foo()
     }
+    {
+        /*遍历自身所有键*/
+        console.log('----------------便利自身所有键---------------------')
+        let Super=function (name='default',age=12) {
+            this.name=name
+            this.age=age
+        }
+        let Current=function () {
+            this.sayName=function () {
+                console.log(this.name)
+            }
+        }
+        Current.prototype=new Super()
+        let current=new Current()
+        console.log(current)
+        for(let key in current){
+            if(current.hasOwnProperty(key)) console.log(key)
+        }
+    }
 </script>
 </body>
 </html>
