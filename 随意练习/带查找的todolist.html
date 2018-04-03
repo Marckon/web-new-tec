@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>todolist</title>
+    <style>
+        #query {
+            background-color: cyan;
+            width: 100%;
+            margin-top: 0;
+            padding: 0;
+        }
+
+        #show {
+            background-color: #ccc;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+            text-indent: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            align-items: center;
+            height: 30px;
+        }
+
+        li:hover {
+            background-color: #efefef;
+        }
+
+    </style>
+</head>
+<body>
+<div style="width:800px;display: flex;align-items: center;flex-wrap: wrap;align-content: center;justify-content: center;margin:0 auto;">
+    <input type="text" style="width: 100%">
+    <ul id="query"></ul>
+    <ul id="show" style="width:100%;"></ul>
+</div>
+</body>
+<script>
+    var input = document.getElementsByTagName('input')[0]
+    var query = document.getElementById('query')
+    var show = document.getElementById('show')
+    var store = []
+    input.addEventListener('keyup', function (e) {
+        let value = input.value
+        if (e.keyCode === 13) {
+            updateShow(value)
+            input.value=''
+        }else{
+            let frag=document.createDocumentFragment()
+            query.innerHTML = ''
+            store.map((v,i) => {
+                if (new RegExp(value).test(v) && value !== '') {
+                    var newli = document.createElement('li')
+                    newli.innerHTML = v
+                    newli.dataset.index=i
+                    frag.appendChild(newli)
+                }
+            })
+            query.appendChild(frag)
+        }
+    })
+    query.addEventListener('mousemove',function (e) {
+        addSpan(e)
+    })
+    show.addEventListener('mousemove',function (e) {
+        addSpan(e)
+    })
+    function addSpan(event){
+        if(event.target.children.length===0&&event.target.tagName==='LI'){
+            let span=document.createElement('span')
+            span.innerHTML='X'
+            span.style.cssText=`{
+            color:red;
+            font-size:2rem;
+        }`
+            span.onclick=function (ev) {
+                let indexToDe=Number(ev.target.parentNode.dataset.index)
+                store.splice(indexToDe,1)
+                updateShow()
+            }
+            event.target.appendChild(span)
+        }
+    }
+    function updateShow(value) {
+        show.innerHTML=''
+        if(value){
+            store.push(value)
+        }
+        let frag=document.createDocumentFragment()
+        store.map((v,i)=>{
+            let li=document.createElement('li')
+            li.innerHTML=v
+            li.dataset.index=i
+            frag.appendChild(li)
+        })
+        show.appendChild(frag)
+    }
+
+</script>
+</html>

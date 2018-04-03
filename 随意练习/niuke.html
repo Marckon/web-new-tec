@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>niuke</title>
+    <style>
+          #form{
+              height:400px;
+              width:400px;
+              text-align: center;
+          }
+          #form tr:nth-child(2n){
+              background-color: gray;
+          }
+          #form tr:nth-child(2n+1){
+              background-color: #fff;
+          }
+          #form tr:hover{
+              background-color: yellow;
+          }
+    </style>
+</head>
+<body>
+<div id="id1" style="width:100px;height:100px">
+    <div id="id2" style="width:100px;height:40px">
+        <div id="id3" style="width:100px;height:100px"></div>
+    </div>
+</div>
+<div id="id11" style="width:100px;height:40px">
+    <div id="id12" style="width:100px;height:100px"></div>
+</div>
+
+<table id="form">
+    <tbody>
+    <tr>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td>6</td>
+    </tr>
+    </tbody>
+</table>
+<script>
+    /*function createArr(end) {
+        let ref=[]
+        let res=[]
+        for(let i=1;i<end+1;i++){
+            ref.push(i)
+            let item=0
+            for(let j=0;j<ref.length;j++){
+                item=item+ref[j]
+            }
+            res.push(item)
+        }
+        return res
+    }
+    function arrDiv3(start,end) {
+        start=Number(start)
+         end=Number(end)
+        let arr=createArr(end).splice(start-1)
+        console.log(arr)
+        let res=0
+        arr.map(function (v) {
+            if(Number(v)%3===0){
+                res++
+            }
+        })
+        return res
+    }
+console.log(arrDiv3("10","110"))*/
+    /* function arrDiv3(start,end) {
+         start=Number(start)
+         end=Number(end)
+         let count=0
+         while (start<=end){
+             if(start%3===2||start%3===0){
+                 count++
+             }
+             start++
+         }
+         return count
+     }
+     console.log(arrDiv3("10","110"))*/
+
+    function traverse(oNode) {
+        var oNode = oNode || document.body
+        var childList = Array.from(oNode.children)
+        for (let i = 0; i < childList.length; i++) {
+            if (childList[i].offsetWidth > 50 && childList[i].offsetHeight > 50) {
+                console.log(childList[i].id)
+            }
+            if (childList[i].children.length > 0) {
+                traverse(childList[i])
+            } else {
+                return
+            }
+        }
+    }
+
+    traverse()
+
+    function sum() {
+        let res=0
+        for (let i=0;i<arguments.length;i++){
+            arguments[i]=Number(arguments[i])?Number(arguments[i]):0
+            res=res+arguments[i]
+        }
+        console.log(res)
+    }
+    sum('0.1','0.3')
+
+   /* let testNumber=1
+    for(let i=0;i<testNumber;i++){
+        let count=0
+        let roadLen=3
+        let roadConfig='.X.'.split('')
+        let currentPos=0
+        while(currentPos<roadLen){
+            if(roadConfig[currentPos]==='.'){
+                count++
+                currentPos+=3
+            }if(roadConfig[currentPos]==='X'){
+                currentPos+=1
+            }
+        }
+    }
+    console.log(count)*/
+   let reg=/[a-z,A-Z]/g
+    console.log(reg.test('u'))
+    console.log(String.fromCharCode('a'.charCodeAt(0)))
+
+</script>
+</body>
+</html>
