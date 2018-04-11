@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>铺砖</title>
+</head>
+<body>
+<script>
+    function bricks(Np,Mp,ap) {
+        let[N,M,a]=[Number(Np),Number(Mp),Number(ap)]
+        let len=Math.ceil(N/a)
+        let wid=Math.ceil(M/a)
+        return len*wid
+    }
+    console.log(bricks(...[6,6,4]))
+    var lines=readInt()
+    for(i=0;i<lines;i++){
+        printSth(bricks(...read_line().split(' ')))
+    }
+</script>
+</body>
+</html>

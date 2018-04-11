@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="page">
+
+    <div class="content main alla">
+
+        <div class="refer">
+
+            <ul>
+
+                <li>123</li>
+
+                <li>123</li>
+
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+ /*   var genCssSelector = function (node) {
+        let result = []
+        if (node.getAttribute('id')) {
+            result = ['#' + node.getAttribute('id'), ...result]
+        } else if (node.getAttribute('class')) {
+            result = ['.' + node.getAttribute('class'), ...result]
+        } else {
+            result = [node.tagName.toLowerCase(), ...result]
+        }
+        if (node.tagName !== 'HTML') {
+            result =[...genCssSelector(node.parentNode),...result]
+        }
+        return result
+    }*/
+ var genCssSelector=function (node) {
+     let result=''
+     if(node.getAttribute('id')){
+         result=' #'+node.getAttribute('id')+result
+     }else if(node.getAttribute('class')){
+         result=' .'+node.getAttribute('class').split(' ').join(' .')+result
+     }else{
+         result=' '+node.tagName.toLowerCase()+result
+     }
+     if (node.tagName!=='HTML'){
+         result=genCssSelector(node.parentNode)+result
+     }
+     return result
+ }
+    document.addEventListener('click', function (ev) {
+        console.log(genCssSelector(ev.target))
+    })
+</script>
+</body>
+</html>
