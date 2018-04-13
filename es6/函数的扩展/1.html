@@ -15,6 +15,8 @@
         }
         let me = new Person('lcz', 24, 'st')
         console.log(me)
+        /*  let him = new Person( ,  , 'st')
+          console.log(him)*///error
     }
 
     {
@@ -26,23 +28,23 @@
         print({x: 5, y: 3})
         print({a: 5, b: 3})
         //实用
-        let fetch=function (url,{body='',method='GET',headers={}}) {
+        let fetch = function (url, {body = '', method = 'GET', headers = {}}) {
             console.log(arguments[0])
             console.log(arguments[1])
         }
-        fetch('www.a.com',{
-            body:'body',
-            method:'post',
-            headers:{
-                content:'content'
+        fetch('www.a.com', {
+            body: 'body',
+            method: 'post',
+            headers: {
+                content: 'content'
             }
         })
         //区分
-        let m1=function ({x=0,y=0}={}) {
-            console.log(x,y)
+        let m1 = function ({x = 0, y = 0} = {}) {
+            console.log(x, y)
         }
-        let m2=function ({x,y}={x:0,y:0}) {
-            console.log(x,y)
+        let m2 = function ({x, y} = {x: 0, y: 0}) {
+            console.log(x, y)
         }
         m1()
         m2()
@@ -51,12 +53,119 @@
     }
     {
         /*length属性
-        * 返回没有默认值参数的个数*/
-        let foo=function (a,c,b=1) {
-            console.log(a,b,c)
+        * 返回没有默认值参数的个数且不包括剩余参数*/
+        let foo = function (a, c, b=1) {
+            console.log(a, b, c)
         }
         console.log(foo.length)
 
+    }
+    {
+        /*应用：省略参数报错*/
+        let throwPaMisErr = function () {
+            throw new Error("缺少参数")
+        }
+        let foo = function (mustBeProvided=throwPaMisErr(), optional) {
+            console.log(mustBeProvided)
+        }
+        // foo()//报错
+    }
+    {
+        /*多余rest参数*/
+        let fun = function (operation='add',...numbers){
+            switch (operation) {
+                case 'add':
+                    var res = 0
+                    numbers.forEach(function (value) {
+                        res += value
+                    })
+                    console.log(res)
+                    break
+                case 'addStr':
+                    var res = ''
+                    numbers.forEach(function (value) {
+                        res += value
+                    })
+                    console.log(res)
+                    break
+            }
+        }
+        fun('add',1,2,3)
+        fun('addStr',1,2,3)
+    }
+    {
+        /*函数名*/
+        let f=function () {
+
+        }
+        console.log(f.name)
+    }
+    {
+        /*箭头函数*/
+        /*case1: 代码多余一条语句用大括号+return*/
+        let sum=(x,y)=>x+y
+        let sum2=(x,y)=>{
+            let res=x+y
+            return res
+    }
+        console.log(sum(1,2))
+        console.log(sum2(1,2))
+
+        /*case2: 返回对象必须加括号*/
+        let getTempObj=id=>({id:id,name:this.name})
+        console.log(getTempObj(1))
+
+        /*case 3: 不需要返回值*/
+        let print=(str)=>console.log(str)
+        print('werwers')
+
+        /*case4: this作用域*/
+        function Timer(){
+            this.s1=0
+            this.s2=0
+            console.log(this)
+            //箭头
+            setInterval(()=>this.s1++,1000)//this 指向固定化
+            //普通
+            setInterval(function () {
+                this.s2++// 调用时this指向全局,当前全局没有s2返回NaN
+            },1000)
+        }
+        let timer=new Timer()
+         // var s2=5
+        setTimeout(()=>console.log('s1: '+timer.s1),3100)//3
+        setTimeout(()=>console.log('s2: '+timer.s2),3100)//0
+    }
+    {
+        /*双冒号
+        * 函数绑定运算符
+        * 提案尚未实现*/
+        let person={
+            name:'lcz',
+            age:24,
+            job:'st'
+        }
+        let goBirthday=function (agePara) {
+            return agePara++
+        }
+        //person::goBirthday(this.age)
+        // person.bind(goBirthday(this.age))
+        console.log(person)
+    }
+    {
+        /*尾调用和尾递归
+        即必须return一个函数,且只在严格模式下生效
+        * 节省内存，只保留一个调用记录
+        * 防止出现栈溢出错误*/
+        function factorial(a,total) {
+            'use strict';
+            if(a===1) return total;
+            return factorial(a-1,a*total)
+        }
+        console.log(factorial(4,1))
+    }
+    {
+        /*函数的最后一个参数后可以出现逗号，ES2017标准*/
     }
 </script>
 </body>

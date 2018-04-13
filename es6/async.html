@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>异步async</title>
+</head>
+<body>
+<button style="width:200px;height:200px;background-color: #667eea;position: absolute; top:0;left:0">回调函数</button>
+<button style="width:200px;height:200px;background-color: #667eea;position: absolute; top:0;left:400px;">Promise</button>
+<button style="width:200px;height:200px;background-color: #667eea;position: absolute; top:0;left:800px;">Generator</button>
+
+
+<script>
+    /*ES6 诞生以前，异步编程的方法，大概有下面四种。
+    * 回调函数
+      事件监听
+      发布/订阅
+      Promise 对象
+      */
+    {
+        /*回调函数*/
+        Node.prototype.CmoveRight = function (time, speed, callBack) {
+            let ele = this
+            let animate = function (ele) {
+                let curPo = parseInt(ele.offsetLeft)
+                let tarPo = curPo + 1
+                ele.style.left = tarPo + 'px'
+            }
+            let si = setInterval(animate, speed, ele)
+            setTimeout(function () {
+                clearInterval(si)
+                if (typeof callBack === 'function') {
+                    return callBack()//核心
+                }
+            }, time)
+            return ele
+        }
+        Node.prototype.CmoveDown = function (time, speed, callBack) {
+            let ele = this
+            let animate = function (ele) {
+                let curPo = parseInt(ele.offsetTop)
+                let tarPo = curPo + 1
+                ele.style.top = tarPo + 'px'
+            }
+            let si = setInterval(animate, speed, ele)
+            setTimeout(function () {
+                clearInterval(si)
+                if (typeof callBack === 'function') {
+                    return callBack()//核心
+                }
+            }, time)
+            return ele
+        }
+
+        const btn = document.getElementsByTagName('button')[0]
+
+        btn.onclick = function () {
+            let firstTime = 1000
+            let secondTime = 1000
+
+            btn.CmoveRight(firstTime, 10, function () {
+                btn.CmoveDown(secondTime, 10)
+            })
+        }
+    }
+    {
+        /*promise*/
+        Node.prototype.PmoveRight = function (time, speed) {
+            let ele = this
+            let promise = new Promise(function (resolve, reject) {
+                let animate = function (ele) {
+                    let curPo = parseInt(ele.offsetLeft)
+                    let tarPo = curPo + 1
+                    ele.style.left = tarPo + 'px'
+                }
+                let si = setInterval(animate, speed, ele)
+                setTimeout(function () {
+                    clearInterval(si)
+                    resolve()
+                }, time)
+            })
+            console.log(promise)
+            return promise
+        }
+        Node.prototype.PmoveDown = function (time, speed) {
+            let ele = this
+            let promise = new Promise(function (resolve, reject) {
+                let animate = function (ele) {
+                    let curPo = parseInt(ele.offsetTop)
+                    let tarPo = curPo + 1
+                    ele.style.top = tarPo + 'px'
+                }
+                let si = setInterval(animate, speed, ele)
+                setTimeout(function () {
+                    clearInterval(si)
+                    resolve()
+                }, time)
+            })//核心
+            console.log(promise)
+            return promise//核心
+        }
+
+        const btn = document.getElementsByTagName('button')[1]
+        btn.onclick = function () {
+            btn.PmoveRight(1000, 10)
+                .then(() => btn.PmoveDown(1000, 10))
+                .then(() => btn.PmoveRight(1000, 100))
+        }
+
+    }
+    {
+        /*Generator*/
+        Node.prototype.GmoveRight=function (time,speed) {
+            let ele=this
+            let animate = function (ele) {
+                let curPo = parseInt(ele.offsetLeft)
+                let tarPo = curPo + 1
+                ele.style.left = tarPo + 'px'
+            }
+            let si = setInterval(animate, speed, ele)
+            setTimeout(function () {
+                clearInterval(si)
+            }, time)
+        }
+        Node.prototype.GmoveDown=function (time,speed) {
+            let ele=this
+            let animate = function (ele) {
+                let curPo = parseInt(ele.offsetTop)
+                let tarPo = curPo + 1
+                ele.style.top = tarPo + 'px'
+            }
+            let si = setInterval(animate, speed, ele)
+            setTimeout(function () {
+                clearInterval(si)
+            }, time)
+        }
+
+        /*创建generator函数*/
+        Node.prototype.Ganimate=function* (animationsArr) {
+            let ele=this
+           for(let i=0;i<animationsArr.length;i++){
+                yield ele[animationsArr[i]](1000,10)
+           }
+        }
+        const btn=document.getElementsByTagName('button')[2]
+        let r='GmoveRight',
+            d='GmoveDown'
+        btn.Ganimate([r,d,d]).next()
+        btn.Ganimate([r,d,d]).next()
+        btn.Ganimate([r,d,d]).next()
+
+    }
+
+</script>
+</body>
+</html>

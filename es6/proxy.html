@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>proxy-修改操作的默认行为</title>
+</head>
+<body>
+<script>
+    /*proxy
+    * var proxy = new Proxy(target, handler);*/
+    function p(s) {
+        console.log(s)
+    }
+    {
+        /*实例一：拦截对象读取设置*/
+        let person = {
+            name: 'lcz',
+            age:24
+        }
+        let proxy = new Proxy(person, {
+            get(target, property) {
+                return 'proxyed '+target[property]
+            },
+            set(target,property,value,receiver){
+                res='proxyed set '+value
+                target[property]=res
+            }
+        })
+        p(proxy.age)
+        proxy.age=26
+        p(proxy.age)
+        p(person)
+    }
+
+</script>
+</body>
+</html>

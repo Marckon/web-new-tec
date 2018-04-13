@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>generator</title>
+</head>
+<body>
+<button>off</button>
+<script>
+    /*语法上，首先可以把它理解成，Generator 函数是一个状态机，封装了多个内部状态*/
+    /*形式上，Generator 函数是一个普通函数，但是有两个特征。
+     *一是，function关键字与函数名之间有一个星号；
+     *二是，函数体内部使用yield表达式，定义不同的内部状态*/
+    /*yield表达式是暂停执行的标记，而next方法可以恢复执行。*/
+    {
+        /*yield 只能用在generator表达式*/
+        /*function* helloWorldGenerator() {
+            yield 'hello'
+            yield 'world'
+            return 'ending'
+        }*/
+        let hw = (function* () {
+            yield 'hello'
+            yield 'world'
+            return 'ending'
+        })()
+        console.log(hw.next())
+        console.log(hw.next())
+        console.log(hw.next())
+        console.log(hw.next())
+        console.log(hw.next())
+        console.log(hw.next())
+    }
+    {
+        /*next函数参数作为上一个yield的返回值*/
+        function* calculate(x) {
+            let y = 2 * (yield (x + 1))
+            let z = yield (y / 3)
+            return x + y + z
+        }
+
+        let x = calculate(5)
+        console.log(x.next().value)//6
+        console.log(x.next(6).value)//4
+        console.log(x.next(4).value)//21
+        console.log(x.next(1).value)//undefined
+    }
+    {
+        /*与for……of循环*/
+        /*使用generator生成斐波那契*/
+        let fibonacci = (function* () {
+            let [prev, curr] = [0, 1]
+            while (true) {
+                [prev, curr] = [curr, curr + prev]
+                yield curr
+            }
+            return curr
+        })()
+        let res = []
+        for (let v of fibonacci) {
+            res.push(v)
+            if (v > 100) {
+                fibonacci.return('end')
+                console.log(res)
+            }
+        }
+    }
+    {
+        /*generator throw*/
+        var g = function* () {
+            try {
+                yield;
+            } catch (e) {
+                console.log('内部捕获', e);
+            }
+        };
+
+        var i = g();
+        i.next();
+
+        try {
+            i.throw('a');
+            i.throw('b');
+        } catch (e) {
+            console.log('外部捕获', e);
+        }
+    }
+    {
+        /* yield* 函数实现在generator函数内调用另外一个generator*/
+        let foo = (function* () {
+            yield 'a'
+            yield 'b'
+            return 'end foo'//不会传入
+        })()
+        let bar=(function* () {
+           yield 'c'
+           yield* foo
+           return 'end bar'
+        })()
+        console.log(bar.next())
+        console.log(bar.next())
+        console.log(bar.next())
+        console.log(bar.next())
+        console.log(bar.next())
+        console.log(bar.next())
+        console.log(bar.next())
+
+    }
+    {
+        /*状态机：实现toggle*/
+        let toggleFun=(function* () {
+           while (true){
+               yield res='on'
+               yield res='off'
+           }
+        })()
+        let btn=document.getElementsByTagName('button')[0]
+        btn.onclick=function () {
+            btn.innerHTML=toggleFun.next().value
+        }
+    }
+    {
+        /*实现异步*/
+
+    }
+</script>
+</body>
+</html>

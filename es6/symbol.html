@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>symbol-第七种数据类型</title>
+</head>
+<body>
+<script>
+    function p(s) {
+        console.log(s)
+    }
+
+    {
+        let s=Symbol()
+        let s1=Symbol('s1-str')
+        p(s)
+        p(s1)
+    }
+    {
+        let s=Symbol()
+        let p2=Symbol()
+        p(Boolean(s))
+        /*p(s+1)*///error symbol 不能与别的数据类型计算
+        p(s===p2)
+    }
+    {
+        /*作为属性名
+        * 不能用点运算符*/
+        let a={}
+        let s=Symbol()
+        a[s]='hello'
+        p(a)
+    }
+    {
+        /*symbol.for登记机制，检查是否已存在，否则创建新symbol*/
+        let s=Symbol.for('foo')
+        let p2=Symbol.for('foo')
+        p(s===p2)//true
+    }
+</script>
+</body>
+</html>

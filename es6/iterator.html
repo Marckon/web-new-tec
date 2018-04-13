@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Iterator</title>
+</head>
+<body>
+<script>
+    /*Iterator 接口主要供for...of消费。
+    * 每一次调用next方法，都会返回数据结构的当前成员的信息。
+    * 具体来说，就是返回一个包含value和done两个属性的对象。
+    * 其中，value属性是当前成员的值，done属性是一个布尔值，表示遍历是否结束。*/
+    {
+        /*给类数组对象部署iterator接口*/
+        let me={
+            0:'lcz',
+            1:24,
+            2:'st',
+            length:3
+        }
+        me[Symbol.iterator]=Array.prototype[Symbol.iterator]
+        console.log(me)
+        for(let v of me){
+            console.log(v)
+        }
+    }
+</script>
+</body>
+</html>

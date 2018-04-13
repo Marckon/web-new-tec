@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>set&map</title>
+</head>
+<body>
+<script>
+    /*set: 类似数组，但成员值唯一
+    * */
+    function p(s) {
+        console.log(s)
+    }
+    {
+        let s=new Set();
+        [1,2,3,4,5,2,3,4,5,].forEach((x)=>s.add(x))
+        p(s)
+    }
+    {
+        /*属性和方法*/
+        let s=new Set([1,2,3])
+        p(s)
+        /*四个操作方法*/
+        /*add*/
+        s.add(4)
+        p(s)
+        /*delete*/
+        s.delete(1)
+        p(s)
+        /*has*/
+        p(s.has(0))
+        /*clear*/
+        s.clear()
+        p(s)
+
+        /*四个遍历方法*/
+        s=new Set(['a','b','c'])
+        /*keys*/
+        Array.from(s.keys()).map(x=>p(x))
+        /*values*/
+        for(let item of s.values()){
+            p(item)
+        }
+        /*entries*/
+        Array.from(s.entries()).map(x=>p(x))
+
+        /*属性*/
+        let s2=new Set([1,2,3])
+        p(s2.size)
+    }
+    {
+        /*实现交并差集*/
+        let a=new Set([1,2,3])
+        let b=new Set([2,3,4])
+        //并集
+        let union=new Set([...a,...b])
+        //交集
+        let intersect=new Set([...a].filter((x)=>b.has(x)))
+        //差集
+        let difference=new Set([...a].filter((x)=>!b.has(x)))
+        p(union)
+        p(intersect)
+        p(difference)
+    }
+    {
+        /*weakset
+        * 与set区别：
+        * 1. 成员只能是对象
+        * 2. 成员不可遍历
+        * 3. 垃圾回收不考虑其对对象的引用*/
+    }
+
+    /*map
+    * 提供值-值对应*/
+    p('-----------------map---------------------')
+    {
+        /*创建*/
+        /*1. */
+        let m=new Map()
+        let key={name:'lcz'}
+        let value={mood:'happy'}
+        m.set(key,value)
+        p(m.get(key))
+        /*2. 数组参数的对象是表示键值对的二元数组*/
+        let m2=new Map([
+            ['name','lcz'],
+            ['mood','happy']
+        ])
+        p(m2)
+        /*3. 使用set*/
+        let s=new Set([
+            ['name','lcz'],
+            ['mood','happy']
+        ])
+        let m3=new Map(s)
+        p(m3)
+    }
+    {
+        /*weakmap
+        * 作用：WeakMap 应用的典型场合就是 DOM 节点作为键名，一旦节点删除，对应的操作就删除，防止内存泄露*/
+    }
+</script>
+</body>
+</html>
